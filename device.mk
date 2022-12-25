@@ -13,24 +13,18 @@ AB_OTA_UPDATER := true
 # fscrypt policy
 TW_USE_FSCRYPT_POLICY := 1
 
-# GMS Client ID
-PRODUCT_GMS_CLIENTID_BASE := android-qualcomm
-
 # A/B updater updatable partitions list. Keep in sync with the partition list
 # with "_a" and "_b" variants in the device. Note that the vendor can add more
 # more partitions to this list for the bootloader and radio.
 AB_OTA_PARTITIONS += \
     boot \
     dtbo \
-    odm \
-    product \
-    recovery \
     system \
     system_ext \
+    vendor \
     vbmeta \
-    vbmeta_system \
-    vendor
-
+    vbmeta_system
+    
 PRODUCT_PACKAGES += \
     otapreopt_script \
     update_engine \
@@ -43,19 +37,16 @@ AB_OTA_POSTINSTALL_CONFIG += \
     FILESYSTEM_TYPE_system=ext4 \
     POSTINSTALL_OPTIONAL_system=true
 
-# tell update_engine to not change dynamic partition table during updates
-# needed since our qti_dynamic_partitions does not include
-# vendor and odm and we also dont want to AB update them
-TARGET_ENFORCE_AB_OTA_PARTITION_LIST := true
-
 # API
 PRODUCT_SHIPPING_API_LEVEL := 29
 
 # Boot control HAL
 PRODUCT_PACKAGES += \
-    android.hardware.boot@1.1-impl \
-    android.hardware.boot@1.1-service \
-    android.hardware.boot@1.1-impl-qti.recovery \
+    android.hardware.boot@1.2-impl \
+    android.hardware.boot@1.2-service \
+    android.hardware.boot@1.2-impl-wrapper.recovery \
+    android.hardware.boot@1.2-impl-wrapper \
+    android.hardware.boot@1.2-impl-qti.recovery \
     bootctrl.$(PRODUCT_PLATFORM).recovery \
     bootctrl.$(PRODUCT_PLATFORM)
     
@@ -84,11 +75,6 @@ PRODUCT_PACKAGES += \
     qcom_decrypt \
     qcom_decrypt_fbe 
 
-# tzdata
-PRODUCT_PACKAGES_ENG += \
-    tzdata_twrp
-
-
 ifeq ($(FOX_VARIANT),FBEv2)
 
 # fscrypt policy
@@ -104,10 +90,21 @@ PRODUCT_PROPERTY_OVERRIDES += \
  
 endif
 
+# Recovery Modules
+TARGET_RECOVERY_DEVICE_MODULES += \
+    libion \
+    libxml2 \
+    vendor.display.config@1.0 \
+    vendor.display.config@2.0
+        
+RECOVERY_LIBRARY_SOURCE_FILES += \
+    $(TARGET_OUT_SHARED_LIBRARIES)/libion.so \
+    $(TARGET_OUT_SHARED_LIBRARIES)/libxml2.so \
+    $(TARGET_OUT_SYSTEM_EXT_SHARED_LIBRARIES)/vendor.display.config@1.0.so \
+    $(TARGET_OUT_SYSTEM_EXT_SHARED_LIBRARIES)/vendor.display.config@2.0.so
+    
+    
 # OEM otacert
 PRODUCT_EXTRA_RECOVERY_KEYS += \
-    $(LOCAL_PATH)/security/local_OTA \
-    $(LOCAL_PATH)/security/pixelexperience
-# APEX libraries    
-PRODUCT_COPY_FILES += \
-    $(OUT_DIR)/target/product/$(PRODUCT_RELEASE_NAME)/obj/SHARED_LIBRARIES/libandroidicu_intermediates/libandroidicu.so:$(TARGET_COPY_OUT_RECOVERY)/root/system/lib64/libcuuc.so
+    $(LOCAL_PATH)/security/local_OTA
+
