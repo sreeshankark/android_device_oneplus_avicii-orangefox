@@ -35,10 +35,15 @@ TARGET_NO_BOOTLOADER := true
 TARGET_USES_UEFI := true
 
 # Kernel
+# Prebuit: FBEv1 or FBEv2 or OOS12?
+ifeq ($(FOX_VARIANT),FBEv1)
+KERNEL_DIR := $(DEVICE_PATH)/prebuilt/FBEv1
+endif
 ifeq ($(FOX_VARIANT),FBEv2) 
 KERNEL_DIR := $(DEVICE_PATH)/prebuilt/FBEv2
-else
-KERNEL_DIR := $(DEVICE_PATH)/prebuilt/FBEv1
+endif
+ifeq ($(FOX_VARIANT),OOS12)
+KERNEL_DIR := $(DEVICE_PATH)/prebuilt/OOS12
 endif
 TARGET_PREBUILT_KERNEL := $(KERNEL_DIR)/kernel
 TARGET_PREBUILT_DTB := $(KERNEL_DIR)/dtb.img
@@ -105,11 +110,23 @@ BOARD_SUPPRESS_SECURE_ERASE := true
 
 # Recovery 
 TARGET_NO_RECOVERY := false
+TARGET_RECOVERY_DEVICE_MODULES += \
+    libion \
+    libxml2 \
+    android.hidl.base@1.0 \
+    ashmemd \
+    ashmemd_aidl_interface-cpp \
+    libashmemd_client \
+    libcap \
+    libpcrecpp
+    
+# APEX
+DEXPREOPT_GENERATE_APEX_IMAGE := true
 
 # Partitions that should be wiped under recovery 
 TARGET_RECOVERY_WIPE := $(DEVICE_PATH)/recovery/root/system/etc/recovery.wipe
 
-# FBEv1 or FBEv2 ?
+# FBEv1 or FBEv2 or OOS12?
 ifeq ($(FOX_VARIANT),FBEv2)
 TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/recovery/root/system/etc/recovery-fbev2.fstab
 else
@@ -159,22 +176,43 @@ TARGET_USE_CUSTOM_LUN_FILE_PATH := /config/usb_gadget/g1/functions/mass_storage.
 TW_THEME := portrait_hdpi
 TW_BRIGHTNESS_PATH := "/sys/class/backlight/panel0-backlight/brightness"
 TW_CUSTOM_CPU_TEMP_PATH := "/sys/devices/virtual/thermal/thermal_zone94/temp"
-TW_EXCLUDE_APEX := true
 TW_EXCLUDE_TWRPAPP := true
-TW_FRAMERATE := 90
+TW_FRAMERATE := 60
 TW_USE_TOOLBOX := true
 TW_DEFAULT_BRIGHTNESS := 200
 TW_EXCLUDE_DEFAULT_USB_INIT := true
+TW_EXCLUDE_ENCRYPTED_BACKUPS := false
 TW_EXTRA_LANGUAGES := true
+TW_NO_BIND_SYSTEM := true
+TW_NO_EXFAT_FUSE := true
 TW_INCLUDE_REPACKTOOLS := true
 TW_HAS_EDL_MODE := true
+TW_NO_USB_STORAGE := false
+TW_NO_SCREEN_BLANK := true
+TW_SCREEN_BLANK_ON_BOOT := true
 TW_INCLUDE_NTFS_3G := true
 TW_EXCLUDE_TWRPAPP := true
 TW_INCLUDE_RESETPROP := true
+TW_INCLUDE_FASTBOOTD := true
+ifeq ($(FOX_VARIANT),OOS12)
+TW_BACKUP_EXCLUSIONS := /data/nandswap
+endif
 TW_INPUT_BLACKLIST := "hbtp_vm"
-TW_OVERRIDE_SYSTEM_PROPS := \
-"ro.build.date.utc;ro.bootimage.build.date.utc=ro.build.date.utc;ro.odm.build.date.utc=ro.build.date.utc;ro.product.build.date.utc=ro.build.date.utc;ro.system.build.date.utc=ro.build.date.utc;ro.system_ext.build.date.utc=ro.build.date.utc;ro.vendor.build.date.utc=ro.build.date.utc;ro.build.product;ro.build.fingerprint=ro.system.build.fingerprint;ro.build.version.incremental;ro.product.device=ro.product.system.device;ro.product.model=ro.product.system.model;ro.product.name=ro.product.system.name"
+TW_SYSTEM_BUILD_PROP_ADDITIONAL_PATHS := build.prop
+TW_OVERRIDE_SYSTEM_PROPS := "ro.build.fingerprint=ro.system.build.fingerprint;ro.build.version.incremental"
 
+TW_RECOVERY_ADDITIONAL_RELINK_BINARY_FILES += \
+    $(TARGET_OUT_EXECUTABLES)/ashmemd \
+    $(TARGET_OUT_EXECUTABLES)/strace
+    
+TW_RECOVERY_ADDITIONAL_RELINK_LIBRARY_FILES += \
+    $(TARGET_OUT_SHARED_LIBRARIES)/android.hidl.base@1.0.so \
+    $(TARGET_OUT_SHARED_LIBRARIES)/ashmemd_aidl_interface-cpp.so \
+    $(TARGET_OUT_SHARED_LIBRARIES)/libashmemd_client.so \
+    $(TARGET_OUT_SHARED_LIBRARIES)/libcap.so \
+    $(TARGET_OUT_SHARED_LIBRARIES)/libpcrecpp.so \
+    $(TARGET_OUT_SHARED_LIBRARIES)/libion.so \
+    $(TARGET_OUT_SHARED_LIBRARIES)/libxml2.so 
     
 # TWRP Debug Flags
 TARGET_USES_LOGD := true

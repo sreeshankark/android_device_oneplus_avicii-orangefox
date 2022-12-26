@@ -27,16 +27,24 @@ AB_OTA_PARTITIONS += \
     
 PRODUCT_PACKAGES += \
     otapreopt_script \
+    cppreopts.sh \
+    checkpoint_gc \
     update_engine \
     update_engine_sideload \
     update_verifier
-
+    
 AB_OTA_POSTINSTALL_CONFIG += \
     RUN_POSTINSTALL_system=true \
     POSTINSTALL_PATH_system=system/bin/otapreopt_script \
     FILESYSTEM_TYPE_system=ext4 \
     POSTINSTALL_OPTIONAL_system=true
 
+AB_OTA_POSTINSTALL_CONFIG += \
+    RUN_POSTINSTALL_vendor=true \
+    POSTINSTALL_PATH_vendor=bin/checkpoint_gc \
+    FILESYSTEM_TYPE_vendor=ext4 \
+    POSTINSTALL_OPTIONAL_vendor=true
+    
 # API
 PRODUCT_SHIPPING_API_LEVEL := 29
 
@@ -46,9 +54,7 @@ PRODUCT_PACKAGES += \
     android.hardware.boot@1.2-service \
     android.hardware.boot@1.2-impl-wrapper.recovery \
     android.hardware.boot@1.2-impl-wrapper \
-    android.hardware.boot@1.2-impl-qti.recovery \
-    bootctrl.$(PRODUCT_PLATFORM).recovery \
-    bootctrl.$(PRODUCT_PLATFORM)
+    android.hardware.boot@1.2-impl-qti.recovery
     
 PRODUCT_PACKAGES_DEBUG += \
     bootctl
@@ -107,4 +113,9 @@ RECOVERY_LIBRARY_SOURCE_FILES += \
 # OEM otacert
 PRODUCT_EXTRA_RECOVERY_KEYS += \
     $(LOCAL_PATH)/security/local_OTA
+    
+# Manifest
+PRODUCT_COPY_FILES += \
+    device/oneplus/avicii/manifest/system_manifest.xml:$(TARGET_COPY_OUT_RECOVERY)/root/system/manifest.xml \
+    device/oneplus/avicii/manifest/vendor_manifest.xml:$(TARGET_COPY_OUT_RECOVERY)/root/vendor/manifest.xml
 
