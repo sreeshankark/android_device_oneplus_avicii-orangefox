@@ -47,6 +47,13 @@ service qti.vibrator-1-2 /system/bin/vendor.qti.hardware.vibrator@1.2-service
     setenv LD_LIBRARY_PATH /vendor/lib64:/vendor/lib:/system/lib64:/system/lib:/sbin
     seclabel u:r:recovery:s0
 
+service wrapped-key-service /system/bin/wrappedkey-fix-service.sh
+    user root
+    group root
+    disabled
+    oneshot
+    seclabel u:r:recovery:s0
+
 on init
     write /sys/class/backlight/panel0-backlight/brightness 200
     setprop sys.usb.configfs 1
@@ -63,7 +70,11 @@ on boot
 on property:ro.boot.usbcontroller=* 
    setprop sys.usb.controller ${ro.boot.usbcontroller}
    write /sys/class/udc/${ro.boot.usbcontroller}/device/../mode peripheral
-    
+
+on property:ro.crypto.state=encrypted && property:ro.crypto.type=file
+    chmod 0777 /system/bin/wrappedkey-fix-service.sh
+    start wrapped-key-service
+        
 on fs
     wait /dev/block/platform/soc/${ro.boot.bootdevice}
     symlink /dev/block/platform/soc/${ro.boot.bootdevice} /dev/block/bootdevice
