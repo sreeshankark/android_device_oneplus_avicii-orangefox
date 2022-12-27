@@ -68,11 +68,11 @@ local found=0;
     if [ "$found" = "1" ]; then
        local wrap0=$(grep "/userdata" "/system/etc/recovery.fstab" | grep "wrappedkey_v0"); # check for FBEv2 wrappedkey_v0, and skip, if found
        if [ -z "$wrap0" ]; then
-       	  echo "I:OrangeFox: this ROM does not support wrappedkey. Removing the wrappedkey flags from the fstab" >> $LOGF;
+       	  echo "I:OrangeFox: This ROM does not support wrappedkey. Removing the wrappedkey flags from the fstab" >> $LOGF;
        	  sed -i -e "s/,wrappedkey//g" /system/etc/recovery.fstab;
        fi
     elif [ "$found" = "0" ]; then
-       echo "I:OrangeFox: this ROM supports wrappedkey. Continuing with the default fstab" >> $LOGF;
+       echo "I:OrangeFox: This ROM supports wrappedkey. Continuing with the default fstab" >> $LOGF;
     fi
 
     # cleanup

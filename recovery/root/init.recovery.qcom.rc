@@ -26,8 +26,8 @@
 #
 
 import /init.recovery.qcom_decrypt.rc
-
-service hal_cryptoeng_oplus /system/bin/hw/vendor.oplus.hardware.cryptoeng@1.0-service
+        
+service hal_cryptoeng_oplus /system/bin/vendor.oplus.hardware.cryptoeng@1.0-service
     class late_start
     user system
     group system input sdcard_rw sdcard_r
@@ -40,7 +40,7 @@ service make-fake-partitions-service /system/bin/make-fake-partitions-service.sh
     oneshot
     seclabel u:r:recovery:s0
     
-service qti.vibrator-1-2 /system/bin/vendor.qti.hardware.vibrator@1.2-service
+service qti-vibrator-1-2 /system/bin/vendor.qti.hardware.vibrator@1.2-service
     user root
     group root
     disabled
@@ -56,28 +56,29 @@ service wrapped-key-service /system/bin/wrappedkey-fix-service.sh
 
 on init
     write /sys/class/backlight/panel0-backlight/brightness 200
+    start boot-hal-1-1
     setprop sys.usb.configfs 1
     mkdir /dev/fscklogs 0770 root system
-    mkdir /mnt/vendor
-    
+        
 on boot
-    start boot-hal-1-1
-    start qti.vibrator-1-2
+    start qti-vibrator-1-2
     start health-hal-2-1
     chmod 0777 /system/bin/make-fake-partitions-service.sh
     start make-fake-partitions-service
-    
+       
 on property:ro.boot.usbcontroller=* 
    setprop sys.usb.controller ${ro.boot.usbcontroller}
    write /sys/class/udc/${ro.boot.usbcontroller}/device/../mode peripheral
 
 on property:ro.crypto.state=encrypted && property:ro.crypto.type=file
     chmod 0777 /system/bin/wrappedkey-fix-service.sh
-    start wrapped-key-service
-        
+    start wrapped-key-service  
+         
 on fs
     wait /dev/block/platform/soc/${ro.boot.bootdevice}
     symlink /dev/block/platform/soc/${ro.boot.bootdevice} /dev/block/bootdevice
+    mkdir /firmware
+    mount vfat /dev/block/bootdevice/by-name/modem${ro.boot.slot_suffix} /firmware ro
     symlink /dev/block/bootdevice/by-name/oem_stanvbk     /dev/block/bootdevice/by-name/oem_stanvbk_a
     symlink /dev/block/bootdevice/by-name/oem_stanvbk     /dev/block/bootdevice/by-name/oem_stanvbk_b
     symlink /dev/block/bootdevice/by-name/oem_dycnvbk     /dev/block/bootdevice/by-name/oem_dycnvbk_a

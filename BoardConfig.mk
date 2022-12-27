@@ -9,6 +9,10 @@ DEVICE_PATH := device/oneplus/avicii
 
 # 12.1 manifest requirements 
 ALLOW_MISSING_DEPENDENCIES := true
+TARGET_SUPPORTS_64_BIT_APPS := true
+BUILD_BROKEN_DUP_RULES := true
+BUILD_BROKEN_ELF_PREBUILT_PRODUCT_COPY_FILES := true
+BUILD_BROKEN_MISSING_REQUIRED_MODULES := true
 
 # Architecture
 TARGET_ARCH := arm64
@@ -114,6 +118,7 @@ TARGET_RECOVERY_DEVICE_MODULES += \
     libion \
     libxml2 \
     android.hidl.base@1.0 \
+    bootctrl.$(PRODUCT_PLATFORM).recovery \
     ashmemd \
     ashmemd_aidl_interface-cpp \
     libashmemd_client \
@@ -194,9 +199,7 @@ TW_INCLUDE_NTFS_3G := true
 TW_EXCLUDE_TWRPAPP := true
 TW_INCLUDE_RESETPROP := true
 TW_INCLUDE_FASTBOOTD := true
-ifeq ($(FOX_VARIANT),OOS12)
 TW_BACKUP_EXCLUSIONS := /data/nandswap
-endif
 TW_INPUT_BLACKLIST := "hbtp_vm"
 TW_SYSTEM_BUILD_PROP_ADDITIONAL_PATHS := build.prop
 TW_OVERRIDE_SYSTEM_PROPS := "ro.build.fingerprint=ro.system.build.fingerprint;ro.build.version.incremental"
