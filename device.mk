@@ -26,27 +26,27 @@ AB_OTA_PARTITIONS += \
     vendor \
     vbmeta \
     vbmeta_system
-    
+
 PRODUCT_PACKAGES += \
     otapreopt_script \
     cppreopts.sh \
-    checkpoint_gc \
     update_engine \
-    update_engine_sideload \
-    update_verifier
+    update_verifier \
+    checkpoint_gc \
+    update_engine_sideload
 
 AB_OTA_POSTINSTALL_CONFIG += \
     RUN_POSTINSTALL_system=true \
     POSTINSTALL_PATH_system=system/bin/otapreopt_script \
     FILESYSTEM_TYPE_system=ext4 \
     POSTINSTALL_OPTIONAL_system=true
-    
+
 AB_OTA_POSTINSTALL_CONFIG += \
     RUN_POSTINSTALL_vendor=true \
     POSTINSTALL_PATH_vendor=bin/checkpoint_gc \
     FILESYSTEM_TYPE_vendor=ext4 \
     POSTINSTALL_OPTIONAL_vendor=true
-       
+    
 # API
 PRODUCT_SHIPPING_API_LEVEL := 29
 
@@ -56,9 +56,9 @@ PRODUCT_PACKAGES += \
     android.hardware.boot@1.2-service \
     android.hardware.boot@1.2-impl-wrapper.recovery \
     android.hardware.boot@1.2-impl-wrapper \
-    android.hardware.boot@1.2-impl-qti.recovery \
+    android.hardware.boot@1.2-impl.recovery \
     bootctrl.$(PRODUCT_PLATFORM) \
-    bootctrl.$(PRODUCT_PLATFORM).recovery 
+    bootctrl.$(PRODUCT_PLATFORM).recovery
     
 PRODUCT_PACKAGES_DEBUG += \
     bootctl

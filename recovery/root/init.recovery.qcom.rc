@@ -46,8 +46,8 @@ service qti-vibrator-1-2 /system/bin/vendor.qti.hardware.vibrator@1.2-service
     disabled
     setenv LD_LIBRARY_PATH /vendor/lib64:/vendor/lib:/system/lib64:/system/lib:/sbin
     seclabel u:r:recovery:s0
-
-service wrapped-key-service /system/bin/wrappedkey-fix-service.sh
+    
+service wrappedkey-fix-service /system/bin/wrappedkey-fix-service.sh
     user root
     group root
     disabled
@@ -69,21 +69,17 @@ on boot
 on property:ro.boot.usbcontroller=* 
    setprop sys.usb.controller ${ro.boot.usbcontroller}
    write /sys/class/udc/${ro.boot.usbcontroller}/device/../mode peripheral
-
+    
 on property:ro.crypto.state=encrypted && property:ro.crypto.type=file
     chmod 0777 /system/bin/wrappedkey-fix-service.sh
-    start wrapped-key-service  
+    start wrappedkey-fix-service
          
 on fs
-    wait /dev/block/platform/soc/${ro.boot.bootdevice}
-    symlink /dev/block/platform/soc/${ro.boot.bootdevice} /dev/block/bootdevice
+    wait /dev/block/platform/soc/1d84000.ufshc
+    symlink /dev/block/platform/soc/1d84000.ufshc /dev/block/bootdevice
     mkdir /firmware
     mount vfat /dev/block/bootdevice/by-name/modem${ro.boot.slot_suffix} /firmware ro
     symlink /dev/block/bootdevice/by-name/oem_stanvbk     /dev/block/bootdevice/by-name/oem_stanvbk_a
     symlink /dev/block/bootdevice/by-name/oem_stanvbk     /dev/block/bootdevice/by-name/oem_stanvbk_b
-    symlink /dev/block/bootdevice/by-name/oem_dycnvbk     /dev/block/bootdevice/by-name/oem_dycnvbk_a
-    symlink /dev/block/bootdevice/by-name/oem_dycnvbk     /dev/block/bootdevice/by-name/oem_dycnvbk_b
-    symlink /dev/block/bootdevice/by-name/apdp            /dev/block/bootdevice/by-name/apdp_a
-    symlink /dev/block/bootdevice/by-name/apdp            /dev/block/bootdevice/by-name/apdp_b
     chown root system /dev/fscklogs/log
     chmod 0770 /dev/fscklogs/log    

@@ -79,6 +79,8 @@ local found=0;
     rm $F;
 }
 
+
+
 # ---
 #echo "I:OrangeFox: running $0" >> $LOGF;
 V=$(getprop "ro.orangefox.variant");
