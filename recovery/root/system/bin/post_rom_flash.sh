@@ -21,8 +21,8 @@
 
 LOGF=/tmp/recovery.log;
 
-echo "I:OrangeFox: Running post-ROM-flash script..." >> LOGF
-echo "I:OrangeFox: Symbolic unlinking partition..." >> LOGF
+echo "I:OrangeFox: Running post-ROM-flash script..." >> $LOGF;
+echo "I:OrangeFox: Symbolic unlinking partition..." >> $LOGF;
 unlink /dev/block/bootdevice/by-name/apdp_a;
 unlink /dev/block/bootdevice/by-name/apdp_b;
 exit 0;

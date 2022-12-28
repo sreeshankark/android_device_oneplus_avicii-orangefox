@@ -21,8 +21,8 @@
 
 LOGF=/tmp/recovery.log;
 
-echo "I:OrangeFox: Running pre-ROM-flash script..." >> LOGF
-echo "I:OrangeFox: Symbolic linking partition..." >> LOGF
+echo "I:OrangeFox: Running pre-ROM-flash script..." >> $LOGF;
+echo "I:OrangeFox: Symbolic linking partition..." >> $LOGF;
 ln -s /dev/block/bootdevice/by-name/apdp /dev/block/bootdevice/by-name/apdp_a;
 ln -s /dev/block/bootdevice/by-name/apdp /dev/block/bootdevice/by-name/apdp_b;
 exit 0;

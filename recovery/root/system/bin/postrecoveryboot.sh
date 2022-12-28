@@ -22,7 +22,7 @@
 # TODO: this kludge is needed to prevent issues with mounting
 # system and vendor in some zip installers and in the gui
 #
-
+LOGF=/tmp/recovery.log;
 set_read_write_partitions() {
   local i=$(getprop "ro.orangefox.fastbootd");
   [ "$i" = "1" ] && return; # don't run this in fastbootd mode
@@ -36,7 +36,7 @@ set_read_write_partitions() {
   # loop through
   for i in ${Parts}
   do
-     echo "I:OrangeFox: setting $i to read/write" >> /tmp/recovery.log;
+     echo "I:OrangeFox: setting $i to read/write" >> $LOGF;
      blockdev --setrw /dev/block/mapper/$i"$slot";
   done
 }
