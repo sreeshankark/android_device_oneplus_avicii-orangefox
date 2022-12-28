@@ -122,9 +122,4 @@ RECOVERY_LIBRARY_SOURCE_FILES += \
     
 # OEM otacert
 PRODUCT_EXTRA_RECOVERY_KEYS += \
-    $(LOCAL_PATH)/security/local_OTA
-    
-# Manifest
-PRODUCT_COPY_FILES += \
-    device/oneplus/avicii/manifest/system_manifest.xml:$(TARGET_COPY_OUT_RECOVERY)/root/system/manifest.xml \
-    device/oneplus/avicii/manifest/vendor_manifest.xml:$(TARGET_COPY_OUT_RECOVERY)/root/vendor/manifest.xml
+    $(LOCAL_PATH)/security/oneplus
