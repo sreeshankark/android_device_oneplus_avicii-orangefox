@@ -1,3 +1,4 @@
+#!/system/bin/sh
 # OOS 12 requires a special partition named "apdp" inorder
 # to flash OOS12 OTA update using custom recovery.
 # This shell script enables the fake partition for OOS12 
