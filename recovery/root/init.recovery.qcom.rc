@@ -35,7 +35,7 @@ service make-fake-partitions-service /system/bin/make-fake-partitions-service.sh
     seclabel u:r:recovery:s0
     
 service qti-vibrator-1-2 /system/bin/vendor.qti.hardware.vibrator@1.2-service
-    user ro
+    user root
     group root
     disabled
     setenv LD_LIBRARY_PATH /vendor/lib64:/vendor/lib:/system/lib64:/system/lib:/sbin
