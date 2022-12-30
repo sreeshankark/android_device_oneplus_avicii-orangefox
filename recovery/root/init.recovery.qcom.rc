@@ -26,12 +26,6 @@
 #
 
 import /init.recovery.qcom_decrypt.rc
-        
-service hal_cryptoeng_oplus /system/bin/vendor.oplus.hardware.cryptoeng@1.0-service
-    class late_start
-    user system
-    group system input sdcard_rw sdcard_r
-    seclabel u:r:recovery:s0
 
 service make-fake-partitions-service /system/bin/make-fake-partitions-service.sh reserve
     user root
@@ -41,7 +35,7 @@ service make-fake-partitions-service /system/bin/make-fake-partitions-service.sh
     seclabel u:r:recovery:s0
     
 service qti-vibrator-1-2 /system/bin/vendor.qti.hardware.vibrator@1.2-service
-    user root
+    user ro
     group root
     disabled
     setenv LD_LIBRARY_PATH /vendor/lib64:/vendor/lib:/system/lib64:/system/lib:/sbin
@@ -55,7 +49,7 @@ service wrappedkey-fix-service /system/bin/wrappedkey-fix-service.sh
     seclabel u:r:recovery:s0
 
 on init
-    write /sys/class/backlight/panel0-backlight/brightness 200
+    write /sys/class/backlight/panel0-backlight/brightness 
     start boot-hal-1-1
     setprop sys.usb.configfs 1
     mkdir /dev/fscklogs 0770 root system
@@ -73,13 +67,15 @@ on property:ro.boot.usbcontroller=*
 on property:ro.crypto.state=encrypted && property:ro.crypto.type=file
     chmod 0777 /system/bin/wrappedkey-fix-service.sh
     start wrappedkey-fix-service
-         
+
 on fs
-    wait /dev/block/platform/soc/1d84000.ufshc
-    symlink /dev/block/platform/soc/1d84000.ufshc /dev/block/bootdevice
+    wait /dev/block/platform/soc/${ro.boot.bootdevice}
+    symlink /dev/block/platform/soc/${ro.boot.bootdevice} /dev/block/bootdevice
     mkdir /firmware
     mount vfat /dev/block/bootdevice/by-name/modem${ro.boot.slot_suffix} /firmware ro
     symlink /dev/block/bootdevice/by-name/oem_stanvbk     /dev/block/bootdevice/by-name/oem_stanvbk_a
     symlink /dev/block/bootdevice/by-name/oem_stanvbk     /dev/block/bootdevice/by-name/oem_stanvbk_b
+    symlink /dev/block/bootdevice/by-name/oem_dycnvbk     /dev/block/bootdevice/by-name/oem_dycnvbk_a
+    symlink /dev/block/bootdevice/by-name/oem_dycnvbk     /dev/block/bootdevice/by-name/oem_dycnvbk_b
     chown root system /dev/fscklogs/log
     chmod 0770 /dev/fscklogs/log    
