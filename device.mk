@@ -10,12 +10,6 @@ LOCAL_PATH := device/oneplus/avicii
 # A/B support
 AB_OTA_UPDATER := true
 
-# fscrypt policy
-TW_USE_FSCRYPT_POLICY := 1
-
-# A/B updater updatable partitions list. Keep in sync with the partition list
-# with "_a" and "_b" variants in the device. Note that the vendor can add more
-# more partitions to this list for the bootloader and radio.
 AB_OTA_PARTITIONS += \
     boot \
     dtbo \
@@ -29,10 +23,10 @@ AB_OTA_PARTITIONS += \
 
 PRODUCT_PACKAGES += \
     otapreopt_script \
+    checkpoint_gc \
     cppreopts.sh \
     update_engine \
     update_verifier \
-    checkpoint_gc \
     update_engine_sideload
 
 AB_OTA_POSTINSTALL_CONFIG += \
@@ -49,6 +43,9 @@ AB_OTA_POSTINSTALL_CONFIG += \
     
 # API
 PRODUCT_SHIPPING_API_LEVEL := 29
+
+#VNDK API
+PRODUCT_TARGET_VNDK_VERSION := 30
 
 # Boot control HAL
 PRODUCT_PACKAGES += \
@@ -105,6 +102,9 @@ PRODUCT_PROPERTY_OVERRIDES += \
 	ro.crypto.volume.filenames_mode=aes-256-cts \
 	ro.crypto.volume.metadata.method=dm-default-key \
 	ro.crypto.volume.options=::v2
+else
+# fscrypt policy
+TW_USE_FSCRYPT_POLICY := 1
 endif
 
 # Recovery Modules
