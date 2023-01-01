@@ -202,6 +202,7 @@ TW_INCLUDE_RESETPROP := true
 TW_INCLUDE_FASTBOOTD := true
 TW_BACKUP_EXCLUSIONS := /data/nandswap
 TW_INPUT_BLACKLIST := "hbtp_vm"
+TW_OVERRIDE_SYSTEM_PROPS := "ro.build.fingerprint=ro.system.build.fingerprint;ro.build.version.incremental"
 TW_RECOVERY_ADDITIONAL_RELINK_BINARY_FILES += $(TARGET_OUT_EXECUTABLES)/ashmemd 
 TW_RECOVERY_ADDITIONAL_RELINK_LIBRARY_FILES += \
     $(TARGET_OUT_SHARED_LIBRARIES)/android.hidl.base@1.0.so \
