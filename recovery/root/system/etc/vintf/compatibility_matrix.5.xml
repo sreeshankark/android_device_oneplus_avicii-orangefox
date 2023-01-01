@@ -1,10 +1,3 @@
-<!--
-    Input:
-        compatibility_matrix.5.xml
-        matrix_kernel_config_r_4.14.xml
-        matrix_kernel_config_r_4.19.xml
-        matrix_kernel_config_r_5.4.xml
--->
 <compatibility-matrix version="4.0" type="framework" level="5">
     <hal format="hidl" optional="true">
         <name>android.hardware.atrace</name>

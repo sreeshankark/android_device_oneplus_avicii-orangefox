@@ -44,9 +44,6 @@ AB_OTA_POSTINSTALL_CONFIG += \
 # API
 PRODUCT_SHIPPING_API_LEVEL := 29
 
-#VNDK API
-PRODUCT_TARGET_VNDK_VERSION := 30
-
 # Boot control HAL
 PRODUCT_PACKAGES += \
     android.hardware.boot@1.2-impl \
