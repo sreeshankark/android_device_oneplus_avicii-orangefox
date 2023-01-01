@@ -202,7 +202,6 @@ TW_INCLUDE_RESETPROP := true
 TW_INCLUDE_FASTBOOTD := true
 TW_BACKUP_EXCLUSIONS := /data/nandswap
 TW_INPUT_BLACKLIST := "hbtp_vm"
-TW_OVERRIDE_SYSTEM_PROPS := "ro.build.fingerprint=ro.system.build.fingerprint;ro.build.version.incremental"
 TW_RECOVERY_ADDITIONAL_RELINK_BINARY_FILES += $(TARGET_OUT_EXECUTABLES)/ashmemd 
 TW_RECOVERY_ADDITIONAL_RELINK_LIBRARY_FILES += \
     $(TARGET_OUT_SHARED_LIBRARIES)/android.hidl.base@1.0.so \
@@ -212,6 +211,9 @@ TW_RECOVERY_ADDITIONAL_RELINK_LIBRARY_FILES += \
     $(TARGET_OUT_SHARED_LIBRARIES)/libpcrecpp.so \
     $(TARGET_OUT_SHARED_LIBRARIES)/libion.so \
     $(TARGET_OUT_SHARED_LIBRARIES)/libxml2.so 
+    
+# OrangeFox Specific Build Flags
+FOX_USE_SPECIFIC_MAGISK_ZIP := $(DEVICE_PATH)/magisk/Magisk-v25.2.zip
     
 # TWRP Debug Flags
 TARGET_USES_LOGD := true

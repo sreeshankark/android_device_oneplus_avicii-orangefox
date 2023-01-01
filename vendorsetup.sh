@@ -37,7 +37,6 @@
 	export FOX_USE_BASH_SHELL=1
 	export OF_PATCH_AVB20=1
 	export FOX_ASH_IS_BASH=1
-	export FOX_USE_SPECIFIC_MAGISK_ZIP=~/recovery/fox/device/oneplus/avicii/magisk/Magisk-v25.2.zip
 	export FOX_USE_TAR_BINARY=1
 	export FOX_USE_SED_BINARY=1
 	export FOX_USE_XZ_UTILS=1
@@ -72,15 +71,11 @@
 	# Screen Settings
 	export OF_SCREEN_H=2400
 	export OF_STATUS_H=144
-	export OF_STATUS_INDENT_LEFT=270
+	export OF_STATUS_INDENT_LEFT=275
 	export OF_STATUS_INDENT_RIGHT=48
 	export OF_ALLOW_DISABLE_NAVBAR=0
 	export OF_CLOCK_POS=1
 	
 	# R11.1 Settings
 	export FOX_VERSION="R11.1_3"
-	export OF_MAINTAINER="Sreeshankar K"
-	
-
-
-	  
+	export OF_MAINTAINER="Sreeshankar K"	  
