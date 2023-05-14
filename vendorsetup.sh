@@ -51,7 +51,6 @@
     	export FOX_BUGGED_AOSP_ARB_WORKAROUND="1601559499"
     	export FOX_ENABLE_APP_MANAGER=1
     	export FOX_USE_NANO_EDITOR=1
-    	export FOX_DISABLE_APP_MANAGER=1
     	
     	# ensure that /sdcard is bind-unmounted before f2fs data repair or format (required for FBE v1)
 	export OF_UNBIND_SDCARD_F2FS=1
@@ -77,5 +76,5 @@
 	export OF_CLOCK_POS=1
 	
 	# R11.1 Settings
-	export FOX_VERSION="R11.1_3"
+	export FOX_VERSION="R11.1_4"
 	export OF_MAINTAINER="Sreeshankar K"	  
