@@ -201,7 +201,7 @@ TW_RECOVERY_ADDITIONAL_RELINK_LIBRARY_FILES += \
     $(TARGET_OUT_SHARED_LIBRARIES)/libxml2.so 
     
 # OrangeFox Specific Build Flags
-FOX_USE_SPECIFIC_MAGISK_ZIP := $(DEVICE_PATH)/magisk/Magisk-v25.2.zip
+FOX_USE_SPECIFIC_MAGISK_ZIP := $(DEVICE_PATH)/magisk/Magisk-v26.1.zip
     
 # TWRP Debug Flags
 TARGET_USES_LOGD := true
