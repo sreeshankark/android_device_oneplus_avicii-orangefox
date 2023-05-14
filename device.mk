@@ -56,7 +56,11 @@ PRODUCT_PACKAGES += \
     
 PRODUCT_PACKAGES_DEBUG += \
     bootctl
-        
+
+# Display Resolution 
+TARGET_SCREEN_HEIGHT := 2400
+TARGET_SCREEN_WIDTH := 1080
+
 # Health HAL
 PRODUCT_PACKAGES += \
     android.hardware.health@2.1-impl.recovery
