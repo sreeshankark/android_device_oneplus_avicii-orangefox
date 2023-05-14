@@ -41,20 +41,10 @@ TARGET_NO_BOOTLOADER := true
 TARGET_USES_UEFI := true
 
 # Kernel
-# Kernel: Prebuit:- FBEv1 or FBEv2 or OOS12?
-ifeq ($(FOX_VARIANT),FBEv1)
-KERNEL_DIR := $(DEVICE_PATH)/prebuilt/FBEv1
-endif
-ifeq ($(FOX_VARIANT),FBEv2) 
-KERNEL_DIR := $(DEVICE_PATH)/prebuilt/FBEv2
-endif
-ifeq ($(FOX_VARIANT),OOS12)
-KERNEL_DIR := $(DEVICE_PATH)/prebuilt/OOS12
-endif
-TARGET_PREBUILT_KERNEL := $(KERNEL_DIR)/kernel
-TARGET_PREBUILT_DTB := $(KERNEL_DIR)/dtb.img
-BOARD_PREBUILT_DTBIMAGE_DIR := $(KERNEL_DIR)
-BOARD_PREBUILT_DTBOIMAGE := $(KERNEL_DIR)/dtbo.img
+TARGET_PREBUILT_KERNEL := $(DEVICE_PATH)/prebuilt/kernel
+TARGET_PREBUILT_DTB := $(DEVICE_PATH)/prebuilt/dtb.img
+BOARD_PREBUILT_DTBIMAGE_DIR := $(DEVICE_PATH)/prebuilt
+BOARD_PREBUILT_DTBOIMAGE := $(DEVICE_PATH)/prebuilt/dtbo.img
 BOARD_BOOTIMG_HEADER_VERSION := 2
 BOARD_FLASH_BLOCK_SIZE := 262144 # (BOARD_KERNEL_PAGESIZE * 64)
 BOARD_INCLUDE_DTB_IN_BOOTIMG := true
@@ -138,12 +128,8 @@ DEXPREOPT_GENERATE_APEX_IMAGE := true
 # Partitions that should be wiped under recovery 
 TARGET_RECOVERY_WIPE := $(DEVICE_PATH)/recovery/root/system/etc/recovery.wipe
 
-# FBEv1 or FBEv2 or OOS12?
-ifeq ($(FOX_VARIANT),FBEv2)
-TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/recovery/root/system/etc/recovery-fbev2.fstab
-else
-TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/recovery/root/system/etc/recovery-fbev1.fstab
-endif
+# File System Table
+TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/recovery/root/system/etc/recovery.fstab
 
 # Workaround for error copying vendor files to recovery ramdisk
 BOARD_PRODUCTIMAGE_FILE_SYSTEM_TYPE := ext4
@@ -173,6 +159,7 @@ PLATFORM_VERSION := 99.87.36
 PLATFORM_VERSION_LAST_STABLE := $(PLATFORM_VERSION)
 TW_INCLUDE_CRYPTO := true
 TW_INCLUDE_CRYPTO_FBE := true
+TW_USE_FSCRYPT_POLICY := 2
 VENDOR_SECURITY_PATCH := $(PLATFORM_SECURITY_PATCH)
 
 # TWRP Specific Build Flags

@@ -88,22 +88,6 @@ PRODUCT_PACKAGES += \
     qcom_decrypt \
     qcom_decrypt_fbe 
 
-ifeq ($(FOX_VARIANT),FBEv2)
-# fscrypt policy
-TW_USE_FSCRYPT_POLICY := 2
-
-# Properties
-PRODUCT_PROPERTY_OVERRIDES += \
-        ro.crypto.allow_encrypt_override=true \
-	ro.crypto.dm_default_key.options_format.version=2 \
-	ro.crypto.volume.filenames_mode=aes-256-cts \
-	ro.crypto.volume.metadata.method=dm-default-key \
-	ro.crypto.volume.options=::v2
-else
-# fscrypt policy
-TW_USE_FSCRYPT_POLICY := 1
-endif
-
 # Recovery Modules
 TARGET_RECOVERY_DEVICE_MODULES += \
     libion \
