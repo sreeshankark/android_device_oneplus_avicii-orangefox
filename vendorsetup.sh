@@ -19,7 +19,7 @@
 	export FOX_DEVICE="avicii"
 	export OF_AB_DEVICE_WITH_RECOVERY_PARTITION=1
  	export ALLOW_MISSING_DEPENDENCIES=true
-	export OF_AB_DEVICE=1
+	export FOX_AB_DEVICE=1
 	export TARGET_DEVICE_ALT="Nord,oneplusnord,OnePlusNord,OneplusNord,OnePlusnord,Oneplusnord,nord,AC2001,AC2003,OnePlus Nord"
 	export FOX_RECOVERY_SYSTEM_PARTITION="/dev/block/mapper/system"
 	export FOX_RECOVERY_VENDOR_PARTITION="/dev/block/mapper/vendor"
@@ -76,5 +76,5 @@
 	export OF_CLOCK_POS=1
 	
 	# R11.1 Settings
-	export FOX_VERSION="R11.1_4"
+	export FOX_VERSION="R11.1_5"
 	export OF_MAINTAINER="Sreeshankar K"	  
